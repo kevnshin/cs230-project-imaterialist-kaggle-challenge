@@ -5,10 +5,10 @@ The script was modified for the purposes of this project
 Split the dataset into train/val/test and resize images to 64x64.
 
 The iMaterialist - furniture dataset comes into the following format:
-    data/train/
+    images/train/
         .jpeg
         ...
-    data/test/
+    images/test/
         .jpeg
         ...
 
@@ -28,7 +28,7 @@ from tqdm import tqdm
 SIZE = 64
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--data_dir', default='../data/', help="Directory with the SIGNS dataset")
+parser.add_argument('--data_dir', default='../images/', help="Directory with the raw dataset")
 parser.add_argument('--outputDir', default='../data64x64', help="Where to write the new data")
 
 
@@ -46,26 +46,24 @@ if __name__ == '__main__':
     assert os.path.isdir(args.data_dir), "Couldn't find the dataset at {}".format(args.data_dir)
 
     # Define the data directories
-    # trainDataDir = os.path.join(args.data_dir, 'train')
+    trainDataDir = os.path.join(args.data_dir, 'train')
     valDataDir = os.path.join(args.data_dir, 'valid')
-    # testDataDir = os.path.join(args.data_dir, 'test')
+    testDataDir = os.path.join(args.data_dir, 'test')
 
     # Get the filenames in each directory (train and test)
-    # trainFilenames = os.listdir(trainDataDir)
-    # trainFilenames = [os.path.join(trainDataDir, f) for f in filenames if f.endswith('.jpeg')]
+    trainFilenames = os.listdir(trainDataDir)
+    trainFilenames = [os.path.join(trainDataDir, f) for f in trainFilenames if f.endswith('.jpeg')]
 
-    print('valDataDir' + valDataDir)
     valFilenames = os.listdir(valDataDir)
     valFilenames = [os.path.join(valDataDir, f) for f in valFilenames if f.endswith('.jpeg')]
-    print(valFilenames)
 
-    # testFilenames = os.listdir(testDataDir)
-    # testFilenames = [os.path.join(testDataDir, f) for f in testFilenames if f.endswith('.jpeg')]
+    testFilenames = os.listdir(testDataDir)
+    testFilenames = [os.path.join(testDataDir, f) for f in testFilenames if f.endswith('.jpeg')]
 
     filenames = {
-      # 'train': trainFilenames,
+      'train': trainFilenames,
       'val': valFilenames,
-      # 'test': testFilenames
+      'test': testFilenames
     }
 
     if not os.path.exists(args.outputDir):
@@ -74,8 +72,7 @@ if __name__ == '__main__':
         print("Warning: output dir {} already exists".format(args.outputDir))
 
     # Preprocess train, val and test
-    # for split in ['train', 'val', 'test']:
-    for split in ['val']:
+    for split in ['train', 'val', 'test']:
         output_dir_split = os.path.join(args.outputDir, '{}'.format(split))
         if not os.path.exists(output_dir_split):
             os.mkdir(output_dir_split)
