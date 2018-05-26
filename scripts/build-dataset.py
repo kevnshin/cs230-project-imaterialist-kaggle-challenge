@@ -46,23 +46,23 @@ if __name__ == '__main__':
     assert os.path.isdir(args.data_dir), "Couldn't find the dataset at {}".format(args.data_dir)
 
     # Define the data directories
-    trainDataDir = os.path.join(args.data_dir, 'train')
-    valDataDir = os.path.join(args.data_dir, 'valid')
-    testDataDir = os.path.join(args.data_dir, 'test')
+    # trainDataDir = os.path.join(args.data_dir, 'train')
+    # valDataDir = os.path.join(args.data_dir, 'valid')
+    testDataDir = os.path.join(args.data_dir, 'test/')
 
     # Get the filenames in each directory (train and test)
-    trainFilenames = os.listdir(trainDataDir)
-    trainFilenames = [os.path.join(trainDataDir, f) for f in trainFilenames if f.endswith('.jpeg')]
+    # trainFilenames = os.listdir(trainDataDir)
+    # trainFilenames = [os.path.join(trainDataDir, f) for f in trainFilenames if f.endswith('.jpeg')]
 
-    valFilenames = os.listdir(valDataDir)
-    valFilenames = [os.path.join(valDataDir, f) for f in valFilenames if f.endswith('.jpeg')]
-
+    # valFilenames = os.listdir(valDataDir)
+    # valFilenames = [os.path.join(valDataDir, f) for f in valFilenames if f.endswith('.jpeg')]
+    print(testDataDir)
     testFilenames = os.listdir(testDataDir)
-    testFilenames = [os.path.join(testDataDir, f) for f in testFilenames if f.endswith('.jpeg')]
+    testFilenames = [os.path.join(testDataDir, f) for f in testFilenames if f.endswith('.jpg')]
 
     filenames = {
-      'train': trainFilenames,
-      'val': valFilenames,
+    #   'train': trainFilenames,
+    #   'val': valFilenames,
       'test': testFilenames
     }
 
@@ -72,7 +72,7 @@ if __name__ == '__main__':
         print("Warning: output dir {} already exists".format(args.outputDir))
 
     # Preprocess train, val and test
-    for split in ['train', 'val', 'test']:
+    for split in ['test']:
         output_dir_split = os.path.join(args.outputDir, '{}'.format(split))
         if not os.path.exists(output_dir_split):
             os.mkdir(output_dir_split)
